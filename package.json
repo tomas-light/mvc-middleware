@@ -1,6 +1,6 @@
 {
   "name": "mvc-middleware",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Mvc middleware for express like .Net Mvc",
   "scripts": {
     "build": "tsc",
@@ -28,12 +28,14 @@
   "license": "MIT",
   "homepage": "https://github.com/TomasLight/mvc-middleware#readme",
   "keywords": [
-    "dependency",
-    "injection",
-    "dependency injection",
-    "di",
-    "cheap di",
-    "instance type"
+    "mvc",
+    "controller",
+    "mvc controller",
+    "mvc middleware",
+    "mvc-middleware",
+    "middleware",
+    "server",
+    ".net controlelrs"
   ],
   "dependencies": {
     "express": "^4.17.1"

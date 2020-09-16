@@ -211,4 +211,6 @@ export { ConsoleLogger };
 ```
 
 ## Controller API
-`ok` method of `MvcController` returns data with 200 status code. You can pass plain text or object that will be transformed to json.
+ - `ok` method of `MvcController` returns data with 200 status code. You can pass plain text or object that will be transformed to json.
+ - `view` returns html view by name (using of `getViewPath` method)
+ - TBD.
