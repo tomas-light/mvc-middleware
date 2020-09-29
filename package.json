@@ -1,6 +1,6 @@
 {
   "name": "mvc-middleware",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "description": "Mvc middleware for express like .Net Mvc",
   "scripts": {
     "build": "tsc",

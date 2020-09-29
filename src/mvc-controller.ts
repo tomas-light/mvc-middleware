@@ -38,13 +38,62 @@ export class MvcController {
         this.response.sendFile(pathToView);
     }
 
-    ok(model: any) {
+    ok(model?: any) {
+        const result = this.toJson(model);
+        this.response.status(200).send(result);
+    }
+    created(model?: any) {
+        const result = this.toJson(model);
+        this.response.status(201).send(result);
+    }
+    accepted(model?: any) {
+        const result = this.toJson(model);
+        this.response.status(202).send(result);
+    }
+    noContent() {
+        this.response.sendStatus(204);
+    }
+
+    found(url: string) {
+        this.redirect(302, url);
+    }
+    permanentRedirect(url: string) {
+        this.redirect(308, url);
+    }
+    redirect(status: number, url: string) {
+        this.response.redirect(status, url);
+    }
+
+    badRequest(model?: any) {
+        this.sendResponse(model, 400);
+    }
+    unauthorized(model?: any) {
+        this.sendResponse(model, 401);
+    }
+    forbid() {
+        this.response.sendStatus(403);
+    }
+    notFound(model?: any) {
+        this.sendResponse(model, 404);
+    }
+    conflict(model?: any) {
+        this.sendResponse(model, 409);
+    }
+
+    serverError(message?: string) {
+        this.response.status(500).send(message);
+    }
+
+    private toJson(model?: any) {
         if (typeof model !== 'object') {
-            this.response.send(model);
-            return;
+            return model;
         }
 
-        const json = JSON.stringify(model);
-        this.response.send(json);
+        return JSON.stringify(model);
+    }
+
+    protected sendResponse(model: any, statusCode: number = 200) {
+        const result = this.toJson(model);
+        this.response.status(statusCode).send(result);
     }
 }

@@ -33,8 +33,9 @@ class MvcMiddleware {
 
     registerControllers(directoryPath: string) {
         const fileNames = fs.readdirSync(directoryPath);
+        const sanitizedFileNames = fileNames.filter(name => name.endsWith('.js') || name.endsWith('.ts'));
 
-        fileNames.forEach(name => {
+        sanitizedFileNames.forEach(name => {
             const pathToController = path.join(directoryPath, name);
             if (fs.lstatSync(pathToController).isDirectory()) {
                 this.registerControllers(pathToController);
