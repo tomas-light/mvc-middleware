@@ -107,6 +107,10 @@ class MvcMiddleware {
                 const paramNames = Object.keys(request.params);
                 args = paramNames.map(name => request.params[name]);
             }
+            if (request.query) {
+                const queryNames = Object.keys(request.query);
+                args = queryNames.map(name => request.query[name]);
+            }
             if (request.body) {
                 args.push(request.body);
             }
