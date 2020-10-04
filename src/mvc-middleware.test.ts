@@ -1,4 +1,4 @@
-import { MvcMiddleware } from './mvc-middleware';
+import { MvcMiddleware } from "./mvc-middleware";
 import { IApplication } from "./types/IApplication";
 import { IRouter } from "./types/IRouter";
 
@@ -57,30 +57,30 @@ class Tester {
                 this.router.push(route);
             },
             stack: this.router,
-        }
+        };
     };
 }
 
-test('root routing', () => {
+test("root routing", () => {
     const mockController = {
         area: undefined,
         get: {
-            '/': '',
-            'index': '',
-            'about': '',
-            'home': '',
-            'form': '',
-            'test/:testId': '',
+            "/": "",
+            "index": "",
+            "about": "",
+            "home": "",
+            "form": "",
+            "test/:testId": "",
         },
     };
 
     const output = [
-        '/',
-        '/index',
-        '/about',
-        '/home',
-        '/form',
-        '/test/:testId',
+        "/",
+        "/index",
+        "/about",
+        "/home",
+        "/form",
+        "/test/:testId",
     ];
 
     const tester = new Tester();
@@ -90,18 +90,18 @@ test('root routing', () => {
     expect(tester.appRoute).toEqual(output);
 });
 
-test('root area routing', () => {
+test("root area routing", () => {
     const mockController = {
-        area: '/test',
+        area: "/test",
         get: {
-            'list': '',
-            'some/:userId': '',
+            "list": "",
+            "some/:userId": "",
         },
     };
 
     const output = [
-        '/test/list',
-        '/test/some/:userId',
+        "/test/list",
+        "/test/some/:userId",
     ];
 
     const tester = new Tester();
@@ -111,22 +111,22 @@ test('root area routing', () => {
     expect(tester.appRoute).toEqual(output);
 });
 
-test('root area routing (api + pages)', () => {
+test("root area routing (api + pages)", () => {
     const mockController = {
-        area: '/users',
+        area: "/users",
         get: {
-            '/api/users/list': '',
-            '/api/users/:userId': '',
-            '/users': '',
-            ':userId': '',
+            "/api/users/list": "",
+            "/api/users/:userId": "",
+            "/users": "",
+            ":userId": "",
         },
     };
 
     const output = [
-        '/api/users/list',
-        '/api/users/:userId',
-        '/users',
-        '/users/:userId',
+        "/api/users/list",
+        "/api/users/:userId",
+        "/users",
+        "/users/:userId",
     ];
 
     const tester = new Tester();
@@ -134,4 +134,119 @@ test('root area routing (api + pages)', () => {
     middleware.register(mockController);
 
     expect(tester.appRoute).toEqual(output);
+});
+
+describe('action argument passing', () => {
+    const tester = new Tester();
+    const middleware = new MvcMiddleware(tester.mockApp, tester.createMockRouter);
+
+    test("params", () => {
+        class MockController {
+            doSomething(id: string, name: string, test: any) {
+                expect(id).toBe('aaa');
+                expect(name).toBe('bbb');
+                expect(test).toBe('ccc');
+            }
+        }
+
+        middleware.createMiddleware(MockController, "doSomething")(
+            {
+                params: {
+                    id: "aaa",
+                    name: "bbb",
+                    test: "ccc",
+                },
+            } as any,
+            {} as any,
+            () => undefined
+        );
+    });
+
+    test("query", () => {
+        class MockController {
+            doSomething(id: string, name: string, test: any) {
+                expect(id).toBe('aaa');
+                expect(name).toBe('bbb');
+                expect(test).toBe('ccc');
+            }
+        }
+
+        middleware.createMiddleware(MockController, "doSomething")(
+            {
+                query: {
+                    id: "aaa",
+                    name: "bbb",
+                    test: "ccc",
+                },
+            } as any,
+            {} as any,
+            () => undefined
+        );
+    });
+
+    test("body", () => {
+        class MockController {
+            doSomething(body: { id: string, name: string, test: any }) {
+                expect(body.id).toBe('aaa');
+                expect(body.name).toBe('bbb');
+                expect(body.test).toBe('ccc');
+            }
+        }
+
+        middleware.createMiddleware(MockController, "doSomething")(
+            {
+                body: {
+                    id: "aaa",
+                    name: "bbb",
+                    test: "ccc",
+                },
+            } as any,
+            {} as any,
+            () => undefined
+        );
+    });
+
+    test("all", () => {
+        class MockController {
+            doSomething(
+                paramId: string, paramName: string, paramTest: any,
+                queryId: string, queryName: string, queryTest: any,
+                body: { id: string, name: string, test: any }
+            ) {
+                expect(paramId).toBe('p-aaa');
+                expect(paramName).toBe('p-bbb');
+                expect(paramTest).toBe('p-ccc');
+
+                expect(queryId).toBe('q-aaa');
+                expect(queryName).toBe('q-bbb');
+                expect(queryTest).toBe('q-ccc');
+
+                expect(body.id).toBe('aaa');
+                expect(body.name).toBe('bbb');
+                expect(body.test).toBe('ccc');
+            }
+        }
+
+        middleware.createMiddleware(MockController, "doSomething")(
+            {
+                params: {
+                    paramId: "p-aaa",
+                    paramName: "p-bbb",
+                    paramTest: "p-ccc",
+                },
+                query: {
+                    queryId: "q-aaa",
+                    queryName: "q-bbb",
+                    queryTest: "q-ccc",
+                },
+                body: {
+                    id: "aaa",
+                    name: "bbb",
+                    test: "ccc",
+                },
+            } as any,
+            {} as any,
+            () => undefined
+        );
+    });
 });

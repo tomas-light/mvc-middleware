@@ -72,8 +72,7 @@ class MvcMiddleware {
             }
 
             Object.keys(routes).forEach(route => {
-                /** @type {string} */
-                const actionName = routes[route];
+                const actionName: string = routes[route];
                 const middleware = this.createMiddleware(ControllerClass, actionName);
 
                 if (ControllerClass.area && route.startsWith('/')) {
@@ -109,7 +108,8 @@ class MvcMiddleware {
             }
             if (request.query) {
                 const queryNames = Object.keys(request.query);
-                args = queryNames.map(name => request.query[name]);
+                const queryParams = queryNames.map(name => request.query[name]);
+                args.push(...queryParams);
             }
             if (request.body) {
                 args.push(request.body);
