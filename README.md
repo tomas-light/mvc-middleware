@@ -211,6 +211,23 @@ export { ConsoleLogger };
 ```
 
 ## Controller API
- - `ok` method of `MvcController` returns data with 200 status code. You can pass plain text or object that will be transformed to json.
- - `view` returns html view by name (using of `getViewPath` method)
- - TBD.
+| Method name         | Response status code | Response type | Arguments                         | Description                                                |
+|:-------------------:|:--------------------:|:-------------:|:---------------------------------:|------------------------------------------------------------|
+| `view`              | 200                  | html          | `viewName:  string`               | returns html view by name (using of  `getViewPath` method) |
+| `ok`                | 200                  | text or json  | `model?:  any`                    | returns 200 status code with data                          |
+| `created`           | 201                  | text or json  | `model?:  any`                    | returns 201 status code with data                          |
+| `accepted`          | 202                  | text or json  | `model?:  any`                    | returns 202 status code with data                          |
+| `noContent`         | 204                  | -             | -                                 | returns 204 status code                                    |
+|                     |                      |               |                                   |                                                            |
+| `found`             | 302                  | text          | `url: string`                     | returns 302 status code                                    |
+| `permanentRedirect` | 308                  | text          | `url: string`                     | returns 308 status code                                    |
+| `redirect`          | 300 - 308            | text          | `statusCode: number, url: string` | returns redirection status code                            |
+|                     |                      |               |                                   |                                                            |
+| `badRequest`        | 400                  | text or json  | `model?:  any`                    | returns 400 status code with data                          |
+| `unauthorized`      | 401                  | text or json  | `model?:  any`                    | returns 401 status code with data                          |
+| `forbid`            | 403                  | -             | `model?:  any`                    | returns 403 status code                                    |
+| `notFound`          | 404                  | text or json  | `model?:  any`                    | returns 404 status code with data                          |
+| `conflict`          | 409                  | text or json  | `model?:  any`                    | returns 409 status code with data                          |
+|                     |                      |               |                                   |                                                            |
+| `serverError`       | 500                  | text          | `message?:  any`                  | returns 500 status code with error message                 |
+| `sendResponse`      | any http status code | text          | `model: any, statusCode?: number` | returns status code with data. Default status code is 200  |

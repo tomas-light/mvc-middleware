@@ -60,8 +60,11 @@ export class MvcController {
     permanentRedirect(url: string) {
         this.redirect(308, url);
     }
-    redirect(status: number, url: string) {
-        this.response.redirect(status, url);
+    redirect(statusCode: number, url: string) {
+        if (statusCode < 300 || statusCode > 308) {
+            throw new Error(`Invalid argument: statusCode (${statusCode}). Status code should be in interval 300 - 308`);
+        }
+        this.response.redirect(statusCode, url);
     }
 
     badRequest(model?: any) {
@@ -89,10 +92,20 @@ export class MvcController {
             return model;
         }
 
+        this.response.setHeader('Content-Type', 'application/json');
         return JSON.stringify(model);
     }
 
     protected sendResponse(model: any, statusCode: number = 200) {
+        if (statusCode < 100 ||
+            statusCode > 103 && statusCode < 200 ||
+            statusCode > 226 && statusCode < 300 ||
+            statusCode > 308 && statusCode < 400 ||
+            statusCode > 449 && statusCode < 500 ||
+            statusCode > 526
+        ) {
+            throw new Error(`Invalid argument: statusCode (${statusCode}).`);
+        }
         const result = this.toJson(model);
         this.response.status(statusCode).send(result);
     }
