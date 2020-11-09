@@ -3,7 +3,7 @@ import path from "path";
 
 export class MvcController {
     private __type__: InstanceType<any>;
-    private request: Request;
+    protected request: Request;
     private response: Response;
 
     constructor(request: Request, response: Response) {
@@ -108,5 +108,25 @@ export class MvcController {
         }
         const result = this.toJson(model);
         this.response.status(statusCode).send(result);
+    }
+
+    protected get url() {
+        return this.request.url;
+    }
+
+    protected get headers() {
+        return this.request.headers;
+    }
+
+    protected get params() {
+        return this.request.params;
+    }
+
+    protected get body() {
+        return this.request.body;
+    }
+
+    protected get query() {
+        return this.request.query;
     }
 }
