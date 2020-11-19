@@ -1,6 +1,6 @@
 {
   "name": "mvc-middleware",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "Mvc middleware for express like .Net Mvc",
   "scripts": {
     "build": "tsc",
@@ -35,7 +35,7 @@
     "mvc-middleware",
     "middleware",
     "server",
-    ".net controlelrs"
+    ".net controller"
   ],
   "dependencies": {
     "express": "^4.17.1"
