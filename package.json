@@ -1,32 +1,41 @@
 {
   "name": "mvc-middleware",
-  "version": "1.1.4",
-  "description": "Mvc middleware for express like .Net Mvc",
+  "version": "2.0.0",
+  "description": "Mvc middleware for express with API similar to .NET MVC",
+  "author": "Artem Ignatev <art.ser.ignatiev@gmail.com>",
+  "repository": "git@github.com:tomas-light/mvc-middleware.git",
   "scripts": {
     "build": "tsc",
-    "test": "jest src"
+    "test": "jest --coverage=true"
+  },
+  "dependencies": {
+    "express": "4.18.2",
+    "cheap-di": "3.4.3"
   },
   "devDependencies": {
-    "@types/express": "^4.17.1",
-    "@types/jest": "26.0.13",
-    "express": "4.17.1",
-    "jest": "26.4.2",
-    "ts-jest": "26.3.0",
-    "tslib": "2.0.1",
-    "typescript": "3.9.7"
+    "@types/express": "4.17.17",
+    "@types/jest": "29.5.0",
+    "@typescript-eslint/eslint-plugin": "5.55.0",
+    "@typescript-eslint/parser": "5.55.0",
+    "eslint": "8.36.0",
+    "eslint-config-prettier": "8.7.0",
+    "eslint-import-resolver-typescript": "3.5.3",
+    "eslint-plugin-import": "2.27.5",
+    "eslint-plugin-prettier": "4.2.1",
+    "eslint-plugin-sonarjs": "0.18.0",
+    "jest": "29.5.0",
+    "prettier": "2.8.4",
+    "ts-jest": "29.0.5",
+    "tslib": "2.5.0",
+    "typescript": "5.0.2"
   },
   "files": [
     "dist/**/*"
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/TomasLight/mvc-middleware.git"
-  },
-  "author": "TomasLight",
   "license": "MIT",
-  "homepage": "https://github.com/TomasLight/mvc-middleware#readme",
+  "homepage": "https://github.com/tomas-light/mvc-middleware#readme",
   "keywords": [
     "mvc",
     "controller",
@@ -37,7 +46,5 @@
     "server",
     ".net controller"
   ],
-  "dependencies": {
-    "express": "^4.17.1"
-  }
+  "packageManager": "yarn@3.5.0"
 }

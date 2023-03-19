@@ -1,2 +1,2 @@
-export * from './mvc-controller';
-export * from './mvc-middleware';
+export * from './MvcController';
+export * from './MvcMiddleware';
