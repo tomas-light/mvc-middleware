@@ -1,5 +1,5 @@
 node_modules
 .idea
-.yarn/cache
+cache
 dist
 test-coverage
