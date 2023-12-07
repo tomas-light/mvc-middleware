@@ -1,0 +1,40 @@
+{
+  "name": "mvc-middleware",
+  "version": "3.0.0-alpha.1",
+  "description": "Mvc middleware for express with API similar to .NET MVC",
+  "author": "Artem Ignatev <art.ser.ignatiev@gmail.com>",
+  "repository": "git@github.com:tomas-light/mvc-middleware.git",
+  "scripts": {
+    "compile": "tsc --build tsconfig.cjs.json ./tsconfig.esm.json ./tsconfig.types.json",
+    "prepare-package-json": "ts-node scripts/prepare-package-json.ts",
+    "build:clean": "rimraf -rf ./dist",
+    "build": "npm-run-all build:clean compile prepare-package-json"
+  },
+  "dependencies": {
+    "cheap-di": "4.0.0-rc-7",
+    "express": "4.18.2"
+  },
+  "devDependencies": {
+    "@types/express": "4.17.17",
+    "npm-run-all": "4.1.5",
+    "rimraf": "5.0.5",
+    "ts-jest": "29.1.0"
+  },
+  "files": ["dist/**/*", ",package.json", "README.md"],
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "license": "MIT",
+  "homepage": "https://github.com/tomas-light/mvc-middleware#readme",
+  "keywords": [
+    "mvc",
+    "controller",
+    "mvc controller",
+    "mvc middleware",
+    "mvc-middleware",
+    "middleware",
+    "server",
+    ".net controller"
+  ],
+  "packageManager": "yarn@3.5.0"
+}

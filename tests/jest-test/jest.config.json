@@ -1,0 +1,26 @@
+{
+  "moduleNameMapper": {
+    // replaces
+    // `import {} from './ContainerImpl.js'` with
+    // `import {} from './ContainerImpl'`
+    "^(\\.\\.?\\/.+)\\.js?$": "$1"
+  },
+  "transform": {
+    "^.+\\.ts?$": [
+      "ts-jest",
+      {
+        "astTransformers": {
+          "before": [
+            "cheap-di-ts-transform"
+          ]
+        }
+      }
+    ]
+  },
+  "coverageDirectory": "<rootDir>/test-coverage",
+  "coverageReporters": ["json", "html-spa"],
+  "collectCoverageFrom": [
+    "<rootDir>/src/**/*.ts"
+  ],
+  "coveragePathIgnorePatterns": ["index.ts"]
+}
