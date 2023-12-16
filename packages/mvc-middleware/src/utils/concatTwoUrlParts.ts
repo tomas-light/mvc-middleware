@@ -1,5 +1,5 @@
 /** concat if has prefix, like ['/api/users', 'profile'] => /api/users/profile */
-export function concatTwoUrlParts(prefix: string, urlPart: string) {
+export function concatTwoUrlParts(prefix: string | undefined, urlPart: string | undefined) {
   const joinedUrl = [prefix, urlPart]
     .map((str) => (str ? str.trim() : ''))
     .filter(Boolean)

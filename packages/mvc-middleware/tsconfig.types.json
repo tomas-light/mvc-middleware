@@ -4,7 +4,7 @@
     "declaration": true,
     "emitDeclarationOnly": true,
     "module": "esnext",
-    "outDir": "dist/types",
+    "outDir": "../dist/types",
     "target": "esnext"
   }
 }

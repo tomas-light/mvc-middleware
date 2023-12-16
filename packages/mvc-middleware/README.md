@@ -42,10 +42,17 @@ interface DependencyResolver {
 }
 ```
 
+We have two sets of decorators: for stage 2 (legacy) and stage 3 proposals. You may choose one of them with imports:
+```ts
+import { api, GET, POST, PUT, PATCH, DELETE } from 'mvc-middleware/stage2';
+import { api, GET, POST, PUT, PATCH, DELETE } from 'mvc-middleware/stage3';
+```
+
+
 ```ts
 // src/api/UsersController.ts
 import { Request, Response } from 'express';
-import { api, get, post } from 'mvc-middleware';
+import { api, GET, POST } from 'mvc-middleware/stage2';
 
 @api('/api/user')
 export class UsersController extends MvcController {
@@ -59,13 +66,13 @@ export class UsersController extends MvcController {
   }
 
   // GET: /api/users/list
-  @get
+  @GET
   list() {
     return this.ok(UsersController.users);
   }
 
   // GET: /api/users/:userId
-  @get(':userId')
+  @GET(':userId')
   getById(userIdStr: string) {
     const userId = parseInt(userIdStr, 10);
     const user = UsersController.users.find(user => user.id === userId);
@@ -73,7 +80,7 @@ export class UsersController extends MvcController {
   }
 
   // POST: /api/users/add
-  @post
+  @POST
   add({ name }: { name: string }) {
     UsersController.users.push({
       id: UsersController.users.length + 1,
