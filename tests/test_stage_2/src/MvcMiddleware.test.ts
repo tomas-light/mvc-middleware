@@ -1,6 +1,7 @@
 import { container } from 'cheap-di';
 import { Application, Request, Response } from 'express';
-import { api, delete_, get, MvcController, MvcMiddleware, patch, post, put } from 'mvc-middleware';
+import { MvcController, MvcMiddleware } from 'mvc-middleware';
+import { api, GET, POST, PUT, PATCH, DELETE } from 'mvc-middleware/stage2';
 
 describe('[class] MvcMiddleware', () => {
   class ExpressMock {
@@ -50,7 +51,7 @@ describe('[class] MvcMiddleware', () => {
         const message = `${request.method.toUpperCase()}: ${request.url}`;
         logger.log(message);
       }
-      @get
+      @GET
       index() {
         return this.noContent();
       }
@@ -66,20 +67,20 @@ describe('[class] MvcMiddleware', () => {
   test('if routes without api prefix are registered correctly', () => {
     @api
     class MyController extends MvcController {
-      @get
-      @get('about')
-      @post('home')
-      @put('form')
+      @GET
+      @GET('about')
+      @POST('home')
+      @PUT('form')
       index() {
         return this.noContent();
       }
 
-      @patch('test/:testId')
+      @PATCH('test/:testId')
       test() {
         return this.noContent();
       }
 
-      @delete_(':userId')
+      @DELETE(':userId')
       delete() {
         return this.noContent();
       }
@@ -97,13 +98,13 @@ describe('[class] MvcMiddleware', () => {
   test('if routes with api prefix are registered correctly', () => {
     @api('/api/test')
     class TestController extends MvcController {
-      @get // /api/test/list
-      @get('form') // /api/test/form
+      @GET // /api/test/list
+      @GET('form') // /api/test/form
       list() {
         return this.noContent();
       }
 
-      @get('some/:userId') // /api/test/some/:userId
+      @GET('some/:userId') // /api/test/some/:userId
       user() {
         return this.noContent();
       }

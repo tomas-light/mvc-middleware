@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import { api, get, MvcController, post } from 'mvc-middleware';
+import { MvcController } from 'mvc-middleware';
+import { api, GET, POST } from 'mvc-middleware/stage3';
 
 class Logger {
   log(message: string) {
@@ -22,17 +23,17 @@ export default class UserController extends MvcController {
     this.logger.log(message);
   }
 
-  @get
+  @GET // api/my/health
   health() {
     return this.noContent();
   }
 
-  @get // api/users
+  @GET // api/my/users
   async users() {
     return this.ok(UserController.users);
   }
 
-  @post // api/add-user
+  @POST // api/my/add-user
   async addUser(payload: { user: { name: string } }) {
     const { user } = payload;
     UserController.users.push(user.name);
@@ -40,7 +41,7 @@ export default class UserController extends MvcController {
     return this.ok('user is created');
   }
 
-  @post('add-user-new') // api/add-user-new
+  @POST('add-user-new') // api/my/add-user-new
   async addUserAnotherWay(payload: { user: { name: string } }) {
     const { user } = payload;
     UserController.users.push(user.name);
@@ -48,3 +49,10 @@ export default class UserController extends MvcController {
     return this.ok('user is created with another way');
   }
 }
+// fetch('/api/my/add-user-new', {
+//   method: 'POST',
+//   headers: {
+//     'Content-Type': 'application/json',
+//   },
+//   body: JSON.stringify({ user: { name: 'my-new-user' } }),
+// });

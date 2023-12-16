@@ -3,7 +3,7 @@ import { Application, Request, Response } from 'express';
 import { readdir } from 'fs/promises';
 import path from 'path';
 import { HTTP_METHODS } from './constants.js';
-import { apiSymbol, ConstructorMaybeController, ConstructorWithUrlPrefix } from './symbols.js';
+import { apiSymbol, PatchedConstructor } from './symbols.js';
 
 export class MvcMiddleware {
   constructor(
@@ -31,7 +31,7 @@ export class MvcMiddleware {
         return;
       }
 
-      const controllerConstructor = (await import(pathToController)).default as ConstructorMaybeController;
+      const controllerConstructor = (await import(pathToController)).default as PatchedConstructor;
       if (!controllerConstructor) {
         console.log(`${dirent.name} has no default import to register it as controller`);
         return;
@@ -41,7 +41,7 @@ export class MvcMiddleware {
         console.log(`${dirent.name} has default export for something, that can not be controller`);
       }
 
-      if (!(controllerConstructor as unknown as ConstructorWithUrlPrefix)[apiSymbol]) {
+      if (!(controllerConstructor as unknown as PatchedConstructor)[apiSymbol]) {
         console.log(`${dirent.name} has no API adjustments`);
         return;
       }
@@ -53,7 +53,7 @@ export class MvcMiddleware {
   }
 
   /** Registers one class as API controller */
-  register(controllerConstructor: ConstructorMaybeController) {
+  register(controllerConstructor: PatchedConstructor) {
     const apiMethods = controllerConstructor[apiSymbol];
     if (!apiMethods) {
       return;
@@ -79,7 +79,7 @@ export class MvcMiddleware {
   }
 
   /** Returns express route handler for specified API controller method */
-  createEndpointHandler(controllerConstructor: ConstructorMaybeController, methodName: string) {
+  createEndpointHandler(controllerConstructor: PatchedConstructor, methodName: string) {
     return (request: Request, response: Response, next: (...args: any[]) => void) => {
       const controller = this.container.resolve(controllerConstructor, request, response);
       if (!controller) {
