@@ -2,8 +2,8 @@ import { Constructor } from 'cheap-di';
 import { classDecorator } from '../decorators/classDecorator.js';
 
 interface Api {
-  <T extends Constructor>(constructor: T): T;
-  (urlPrefix: string): <T extends Constructor>(constructor: T) => T;
+  <T, TConstructor extends Constructor<T>>(constructor: TConstructor): TConstructor;
+  (urlPrefix: string): <T, TConstructor extends Constructor<T>>(constructor: TConstructor) => TConstructor;
 }
 
 /**

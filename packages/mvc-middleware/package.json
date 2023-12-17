@@ -1,11 +1,11 @@
 {
   "name": "@mvc-middleware/src",
-  "version": "3.0.0-alpha.2",
+  "version": "3.0.0-rc.2",
   "description": "Mvc middleware for express with API similar to .NET MVC",
   "author": "Artem Ignatev <art.ser.ignatiev@gmail.com>",
   "repository": "git@github.com:tomas-light/mvc-middleware.git",
   "license": "MIT",
-  "homepage": "https://github.com/tomas-light/mvc-middleware#readme",
+  "homepage": "https://github.com/tomas-light/mvc-middleware/tree/master/packages/mvc-middleware#readme",
   "keywords": [
     "mvc",
     "controller",
@@ -13,27 +13,29 @@
     "mvc middleware",
     "mvc-middleware",
     "middleware",
-    "server",
-    ".net controller"
+    ".net controller",
+    "express",
+    "express cheap-di",
+    "express dependency injection",
+    "cheap-di"
   ],
   "scripts": {
     "compile": "tsc --build tsconfig.cjs.json ./tsconfig.esm.json ./tsconfig.types.json",
     "prepare-package-json": "ts-node scripts/prepare-package-json.ts",
-    "build:clean": "rimraf -rf .ю/dist",
+    "build:clean": "rimraf -rf ../dist",
     "build": "npm-run-all build:clean compile prepare-package-json"
   },
   "dependencies": {
-    "cheap-di": "4.0.0-rc-11",
+    "cheap-di": "4.0.0-rc-32",
     "express": "4.18.2"
   },
   "devDependencies": {
     "@types/express": "4.17.17",
     "npm-run-all": "4.1.5",
-    "rimraf": "5.0.5",
-    "ts-jest": "29.1.0"
+    "rimraf": "5.0.5"
   },
   "peerDependencies": {
-    "cheap-di": ">=4.0.0-rc-11"
+    "cheap-di": ">=4.0.0-rc-32"
   },
   "build-instructions": {
     "files": [
@@ -41,7 +43,8 @@
       "esm/**/*",
       "types/**/*",
       "package.json",
-      "README.md"
+      "README.md",
+      "LICENSE"
     ],
     "main": "./cjs/index.js",
     "module": "./esm/index.js",

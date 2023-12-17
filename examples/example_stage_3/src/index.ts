@@ -9,7 +9,6 @@ import path from 'path';
 const app = express();
 app.use(cors());
 app.use(json({ limit: '50mb' }) as RequestHandler);
-import UserController from './api/UserController.js';
 
 const controllersPath = path.join(__dirname, 'api');
 

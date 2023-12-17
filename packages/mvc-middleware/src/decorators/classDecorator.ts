@@ -1,4 +1,3 @@
-import { Constructor } from 'cheap-di';
 import { ApiMethodsContainer, clearTemporaryBox, copyTemporaryBox } from '../constants.js';
 import { apiSymbol, type PatchedConstructor } from '../symbols.js';
 import { concatTwoUrlParts } from '../utils/concatTwoUrlParts.js';

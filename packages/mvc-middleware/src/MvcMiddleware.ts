@@ -8,7 +8,7 @@ import { apiSymbol, PatchedConstructor } from './symbols.js';
 export class MvcMiddleware {
   constructor(
     private readonly application: Pick<Application, 'get' | 'post' | 'put' | 'patch' | 'delete'>,
-    private readonly container: {
+    private readonly container?: {
       resolve: DependencyResolver['resolve'];
     }
   ) {}
@@ -81,7 +81,15 @@ export class MvcMiddleware {
   /** Returns express route handler for specified API controller method */
   createEndpointHandler(controllerConstructor: PatchedConstructor, methodName: string) {
     return (request: Request, response: Response, next: (...args: any[]) => void) => {
-      const controller = this.container.resolve(controllerConstructor, request, response);
+      let controller: {
+        [methodName: string]: (...methodArgs: unknown[]) => unknown;
+      };
+      if (this.container) {
+        controller = this.container.resolve(controllerConstructor, request, response);
+      } else {
+        controller = new controllerConstructor(request, response);
+      }
+
       if (!controller) {
         next();
         return;
